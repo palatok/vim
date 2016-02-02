@@ -14,6 +14,9 @@ execute pathogen#infect()
 noremap j gj
 noremap k gk
 
+" visually select everything inside a block using %
+noremap % v%
+
 syntax enable
 set background=dark
 se t_Co=16
@@ -51,4 +54,19 @@ filetype plugin indent on
 
 set wildmenu
 set laststatus=2
+
+" remove search highlight on pressing Esc
+nnoremap <esc> :noh<return><esc>
+
+" Code Folding setting
+set foldmethod=indent   "fold based on indent
+set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1         "this is just what i use
+
+
+
+
+
+
 
