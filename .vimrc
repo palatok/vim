@@ -14,13 +14,21 @@ execute pathogen#infect()
 noremap j gj
 noremap k gk
 
+" swap : & ; key
+nnoremap : ;
+nnoremap ; :
+
 " visually select everything inside a block using %
 noremap % v%
+
+" remember up to 100 marks and also memorize glbal marks
+set viminfo='100,f1
 
 syntax enable
 set background=dark
 se t_Co=16
 let g:solarized_termcolors=256
+" let g:gruvbox_termcolors=16
 colorscheme solarized
 
 set hidden
@@ -56,7 +64,8 @@ set wildmenu
 set laststatus=2
 
 " remove search highlight on pressing Esc
-nnoremap <esc> :noh<return><esc>
+" this line create some problems when vim first load up, goes to insert mode
+" nnoremap <esc> :noh<return><esc>
 
 " Code Folding setting
 set foldmethod=indent   "fold based on indent
@@ -64,9 +73,12 @@ set foldnestmax=10      "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
 set foldlevel=1         "this is just what i use
 
+autocmd FileType javascript,css,php,cpp,c nnoremap <silent> <Leader>; :call cosco#commaOrSemiColon()<CR>
+autocmd FileType javascript,css,php,cpp,c inoremap <silent> <Leader>; <c-o>:call cosco#commaOrSemiColon()<CR>
 
-
-
-
-
-
+" block cursor in normal mode, ibeam cursor in insert mode
+if has("autocmd")
+  au InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
+  au InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+  au VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
+endif
